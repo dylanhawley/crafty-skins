@@ -1,10 +1,22 @@
 [tool.poetry]
-package-mode = false
+name = "crafty-skins"
+version = "0.1.0"
+description = "Generate Minecraft character skins using Stable Diffusion XL"
+authors = ["Dylan Hawley <dylanthomashawley@gmail.com>"]
+readme = "README.md"
+packages = [{include = "crafty_skins", from = "src"}]
+package-mode = true
 
 [tool.poetry.dependencies]
 python = ">=3.12,<3.13"
-skinpy = "^0.0.4"
-mediapipe = "^0.10.18"
+torch = "^2.1.0"
+diffusers = "^0.25.0"
+transformers = "^4.35.0"
+accelerate = "^0.25.0"
+datasets = "^2.15.0"
+pillow = "^10.1.0"
+numpy = "^1.26.0"
+argparse = "^1.4.0"
 
 [build-system]
 requires = ["poetry-core"]
