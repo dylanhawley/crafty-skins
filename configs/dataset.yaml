@@ -1,0 +1,26 @@
+image:
+  width: 1024
+  height: 1024
+
+directories:
+  skin_directory: "/Users/dylanhawley/Projects/crafty-skins/data/raw/skins/groot.png"
+  target_directory: "/Users/dylanhawley/Projects/crafty-skins/data/raw/input/groot.png"
+  output_directory: "/Users/dylanhawley/Projects/crafty-skins/data/processed/"
+
+perspectives:
+  - x: "left"
+    y: "front"
+    z: "up"
+    scaling_factor: 20
+  - x: "right"
+    y: "back"
+    z: "up"
+    scaling_factor: 20
+  - x: "left"
+    y: "back"
+    z: "down"
+    scaling_factor: 20
+  - x: "right"
+    y: "front"
+    z: "down"
+    scaling_factor: 20
