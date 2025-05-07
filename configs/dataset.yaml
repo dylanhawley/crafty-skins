@@ -3,9 +3,9 @@ image:
   height: 1024
 
 directories:
-  skin_directory: "/Users/dylanhawley/Projects/crafty-skins/data/raw/skins/groot.png"
-  target_directory: "/Users/dylanhawley/Projects/crafty-skins/data/raw/input/groot.png"
-  output_directory: "/Users/dylanhawley/Projects/crafty-skins/data/processed/"
+  skin: "/Users/dylanhawley/Projects/crafty-skins/data/raw/skins/groot.png"
+  target: "/Users/dylanhawley/Projects/crafty-skins/data/raw/input/groot.png"
+  output: "/Users/dylanhawley/Projects/crafty-skins/data/processed/"
 
 perspectives:
   - x: "left"
