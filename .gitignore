@@ -163,5 +163,6 @@ cython_debug/
 
 *.png
 *.jpg
+*.jpeg
 .DS_Store
 .python-version
