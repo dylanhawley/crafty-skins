@@ -2,13 +2,14 @@ import yaml
 from skinpy import Skin, Perspective
 from PIL import Image
 import argparse
-import os
-import glob
+from pathlib import Path
 
 class CompositeGenerator:
     def __init__(self, width, height, skin_dir, target_dir, output_dir, perspectives):
         self.width, self.height = width, height
-        self.skin_dir, self.target_dir, self.output_dir = skin_dir, target_dir, output_dir
+        self.skin_dir = Path(skin_dir)
+        self.target_dir = Path(target_dir)
+        self.output_dir = Path(output_dir)
         self.perspectives = [Perspective(**p) for p in perspectives]
         
     @classmethod
@@ -36,23 +37,18 @@ class CompositeGenerator:
             y = self.height//2 if i >= 2 else 0
             composite.paste(isometric, (x, y))
         composite.paste(uv_map.resize((self.width//2, self.height//2), Image.BOX), (self.width//2, self.height//2))
-        
-        # Create output filename based on input filename
-        base_name = os.path.splitext(os.path.basename(skin_path))[0]
-        output_file = os.path.join(self.output_dir, f"{base_name}.png")
-        composite.save(output_file)
+        composite.save(self.output_dir / f"{Path(skin_path).stem}.png")
         
     def process_all_pairs(self):
-        if not os.path.exists(self.output_dir):
+        if not self.output_dir.exists():
             raise FileNotFoundError(f"Output directory '{self.output_dir}' does not exist")
             
-        for skin_path in glob.glob(os.path.join(self.skin_dir, "*.png")):
-            base_name = os.path.splitext(os.path.basename(skin_path))[0]
-            target_path = os.path.join(self.target_dir, f"{base_name}.png")
-            if os.path.exists(target_path):
+        for skin_path in self.skin_dir.glob("*.png"):
+            target_path = self.target_dir / f"{skin_path.stem}.png"
+            if target_path.exists():
                 self.generate_composite(skin_path, target_path)
             else:
-                print(f"Warning: No matching target file found for {base_name}")
+                print(f"Warning: No matching target file found for {skin_path.stem}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Generate composite images from Minecraft skins')
