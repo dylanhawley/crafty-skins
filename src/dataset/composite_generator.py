@@ -53,7 +53,7 @@ class CompositeGenerator:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Generate composite images from Minecraft skins')
-    parser.add_argument('--config', type=str, default='../../configs/dataset.yaml')
+    parser.add_argument('--config', type=str, required=True)
     args = parser.parse_args()
     
     generator = CompositeGenerator.from_yaml(args.config)
