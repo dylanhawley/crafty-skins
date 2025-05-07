@@ -2,10 +2,11 @@ image:
   width: 1024
   height: 1024
 
-directories:
-  skin: "/Users/dylanhawley/Projects/crafty-skins/data/raw/skins-post1.8/"
-  target: "/Users/dylanhawley/Projects/crafty-skins/data/raw/input/"
-  output: "/Users/dylanhawley/Projects/crafty-skins/data/processed/"
+paths:
+  metadata: "/Users/dylanhawley/Projects/crafty-skins/data/raw/metadata/"
+  skin_dir: "/Users/dylanhawley/Projects/crafty-skins/data/raw/skins-post1.8/"
+  target_dir: "/Users/dylanhawley/Projects/crafty-skins/data/raw/input/"
+  output_dir: "/Users/dylanhawley/Projects/crafty-skins/data/processed/1024x1024/"
 
 perspectives:
   - x: "left"

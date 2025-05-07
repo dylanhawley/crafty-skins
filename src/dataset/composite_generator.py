@@ -20,9 +20,9 @@ class CompositeGenerator:
         return cls(
             width=config['image']['width'],
             height=config['image']['height'],
-            skin_dir=config['directories']['skin'],
-            target_dir=config['directories']['target'],
-            output_dir=config['directories']['output'],
+            skin_dir=config['paths']['skin_dir'],
+            target_dir=config['paths']['target_dir'],
+            output_dir=config['paths']['output_dir'],
             perspectives=config['perspectives'],
         )
         
@@ -53,7 +53,7 @@ class CompositeGenerator:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Generate composite images from Minecraft skins')
-    parser.add_argument('--config', type=str, required=True)
+    parser.add_argument('--config', type=str, required=True, help='Path to the configuration file')
     args = parser.parse_args()
     
     generator = CompositeGenerator.from_yaml(args.config)
