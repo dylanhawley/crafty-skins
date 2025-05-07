@@ -22,7 +22,7 @@ class CompositeGenerator:
             skin_dir=config['directories']['skin'],
             target_dir=config['directories']['target'],
             output_dir=config['directories']['output'],
-            perspectives=[Perspective(**p) for p in config['perspectives']],
+            perspectives=config['perspectives'],
         )
         
     def generate_composite(self, skin_path, target_path):
