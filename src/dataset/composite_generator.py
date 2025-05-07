@@ -3,6 +3,7 @@ from skinpy import Skin, Perspective
 from PIL import Image
 import argparse
 from pathlib import Path
+from tqdm import tqdm
 
 class CompositeGenerator:
     def __init__(self, width, height, skin_dir, target_dir, output_dir, perspectives):
@@ -43,7 +44,7 @@ class CompositeGenerator:
         if not self.output_dir.exists():
             raise FileNotFoundError(f"Output directory '{self.output_dir}' does not exist")
             
-        for skin_path in self.skin_dir.glob("*.png"):
+        for skin_path in tqdm(list(self.skin_dir.glob("*.png")), desc="Processing skins"):
             target_path = self.target_dir / f"{skin_path.stem}.png"
             if target_path.exists():
                 self.generate_composite(skin_path, target_path)
