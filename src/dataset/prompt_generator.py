@@ -8,8 +8,11 @@ from openai import OpenAI
 
 class PromptGenerator:
     def __init__(self, metadata_filepath, output_dir, openai_api_key=None):
+        self.metadata = []
         with open(metadata_filepath, 'r') as f:
-            self.metadata = json.load(f)
+            for line in f:
+                if line.strip():  # Skip empty lines
+                    self.metadata.append(json.loads(line))
         self.output_dir = Path(output_dir)
         self.client = OpenAI(api_key=openai_api_key or os.getenv('OPENAI_API_KEY'))
         
@@ -41,7 +44,7 @@ class PromptGenerator:
         
     def generate_prompt(self, text, output):
         enhanced_text = self.enhance_prompt(text)
-        with open(self.output_dir / output, 'w') as f:
+        with open((self.output_dir / output).with_suffix('.txt'), 'w') as f:
             f.write(enhanced_text)
         
     def process_all_pairs(self):
