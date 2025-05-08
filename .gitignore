@@ -166,3 +166,4 @@ cython_debug/
 *.jpeg
 .DS_Store
 .python-version
+data/
