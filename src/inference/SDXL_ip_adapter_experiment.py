@@ -90,9 +90,9 @@ def create_output_table(pipeline, input_image_paths, prompt, scales, figures_dir
             # Add scale labels to the top row
             if row_idx == 0:
                 if col_idx == 0:
-                    ax.set_title('Input Image')
+                    ax.set_title('Input Image', fontsize=35)
                 else:
-                    ax.set_title(f'Scale: {scales[col_idx-1]:.1f}')
+                    ax.set_title(f'Scale: {scales[col_idx-1]:.1f}', fontsize=35)
     
     plt.tight_layout()
     
