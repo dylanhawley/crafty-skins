@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
 import datetime
-import time
 
 def create_experiment_folder(experiment_name):
     """Create and return the experiment folder structure."""
@@ -96,8 +95,9 @@ def create_output_table(pipeline, input_image_paths, prompt, scales, figures_dir
     
     plt.tight_layout()
     
+    fpath = Path(experiment_name.lower().replace(" ", "_"))
     # Save the composite figure
-    composite_path = figures_dir.parent / "ip_adapter_scale_comparison.png"
+    composite_path = figures_dir.parent / fpath
     plt.savefig(composite_path, bbox_inches='tight', dpi=300)
     plt.close()
     
@@ -178,7 +178,7 @@ def run_experiment(experiment_name, input_image_paths, prompt, scales, num_infer
 
 if __name__ == "__main__":
     # Define experiment parameters
-    experiment_name = "IP Adapter Scale Test"
+    experiment_name = "IP Adapter Scale Test 100 Steps"
     input_image_paths = [
         "data/raw/input/13thdoctor.png",
         "data/raw/input/3dglasses.png",
@@ -199,7 +199,7 @@ if __name__ == "__main__":
     ]
     prompt = ""
     scales = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
-    num_inference_steps = 30
+    num_inference_steps = 100
     
     # Run the experiment
     experiment_dir = run_experiment(experiment_name, input_image_paths, prompt, scales, num_inference_steps)
