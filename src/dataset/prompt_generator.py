@@ -3,7 +3,6 @@ import argparse
 from pathlib import Path
 from tqdm import tqdm
 import json
-import os
 
 class PromptGenerator:
     def __init__(self, metadata_filepath, output_dir):
