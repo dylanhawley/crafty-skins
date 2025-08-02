@@ -8,8 +8,6 @@ import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
 from PIL import Image
-import random
-import numpy as np
 from pathlib import Path
 import argparse
 from tqdm import tqdm
@@ -18,11 +16,11 @@ from typing import Optional, Tuple, List
 import json
 from datetime import datetime
 
-from diffusers import StableDiffusionXLPipeline, UNet2DConditionModel, AutoencoderKL
+from diffusers import UNet2DConditionModel, AutoencoderKL
 from diffusers.schedulers import DDPMScheduler
 from diffusers.optimization import get_scheduler
 from transformers import CLIPTextModel, CLIPTextModelWithProjection, CLIPTokenizer
-from peft import LoraConfig, get_peft_model, TaskType
+from peft import LoraConfig, get_peft_model
 import accelerate
 from accelerate import Accelerator
 from accelerate.utils import set_seed
@@ -87,14 +85,12 @@ class CompositeImageDataset(Dataset):
             (panel_height, image_size, panel_width, image_size)  # bottom-right
         ]
         
-        # Randomly select panels to mask
-        if random.random() < self.mask_probability:
-            num_panels_to_mask = random.randint(1, min(self.max_masked_panels, len(panels)))
-            panels_to_mask = random.sample(range(len(panels)), num_panels_to_mask)
-            
-            for panel_idx in panels_to_mask:
-                y1, y2, x1, x2 = panels[panel_idx]
-                mask[y1:y2, x1:x2] = 0.0
+        # Always mask top-right, bottom-right, and bottom-left panels
+        panels_to_mask = [1, 2, 3]  # top-right, bottom-left, bottom-right
+        
+        for panel_idx in panels_to_mask:
+            y1, y2, x1, x2 = panels[panel_idx]
+            mask[y1:y2, x1:x2] = 0.0
         
         return mask
     
