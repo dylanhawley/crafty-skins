@@ -1,9 +1,6 @@
 import torch
-import torch.nn.functional as F
-from diffusers import StableDiffusionXLInpaintPipeline, UNet2DConditionModel
+from diffusers import StableDiffusionXLInpaintPipeline
 from diffusers.schedulers import DDIMScheduler
-from transformers import CLIPTextModel, CLIPTextModelWithProjection, CLIPTokenizer
-from peft import PeftModel
 from PIL import Image, ImageDraw
 import numpy as np
 from pathlib import Path
@@ -148,7 +145,6 @@ class SDXLLoRAInference:
             try:
                 # Try loading with prefix=None to resolve prefix warnings
                 from peft import PeftModel
-                import safetensors.torch
                 
                 # Load LoRA directly to UNet
                 adapter_path = Path(self.lora_path) / "adapter_model.safetensors"
@@ -290,52 +286,6 @@ class SDXLLoRAInference:
                 draw.rectangle(coords, fill=0)
         
         return mask
-        """
-        Create a soft gradient mask for smoother transitions between panels.
-        
-        Args:
-            image_size (Tuple[int, int]): Size of the image (width, height)
-            panels_to_mask (List[int]): List of panel indices to mask
-            gradient_width (int): Width of the gradient transition
-        
-        Returns:
-            Image.Image: Gradient mask image
-        """
-        width, height = image_size
-        mask = np.ones((height, width), dtype=np.float32) * 255
-        
-        panel_width = width // 2
-        panel_height = height // 2
-        
-        # Define panel coordinates
-        panel_coords = [
-            (0, 0, panel_width, panel_height),  # top-left
-            (panel_width, 0, width, panel_height),  # top-right
-            (0, panel_height, panel_width, height),  # bottom-left
-            (panel_width, panel_height, width, height)  # bottom-right
-        ]
-        
-        for panel_idx in panels_to_mask:
-            if 0 <= panel_idx < len(panel_coords):
-                x1, y1, x2, y2 = panel_coords[panel_idx]
-                
-                # Create soft transition at edges
-                for y in range(max(0, y1 - gradient_width), min(height, y2 + gradient_width)):
-                    for x in range(max(0, x1 - gradient_width), min(width, x2 + gradient_width)):
-                        if x1 <= x < x2 and y1 <= y < y2:
-                            # Inside panel - fully masked
-                            mask[y, x] = 0
-                        else:
-                            # Outside panel - create gradient
-                            dist_to_panel = min(
-                                abs(x - x1) if x < x1 else (abs(x - x2) if x >= x2 else 0),
-                                abs(y - y1) if y < y1 else (abs(y - y2) if y >= y2 else 0)
-                            )
-                            if dist_to_panel < gradient_width:
-                                alpha = dist_to_panel / gradient_width
-                                mask[y, x] = min(mask[y, x], alpha * 255)
-        
-        return Image.fromarray(mask.astype(np.uint8), mode='L')
     
     def generate_conditional(
         self,
