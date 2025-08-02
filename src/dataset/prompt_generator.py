@@ -13,6 +13,15 @@ class PromptGenerator:
                     self.metadata.append(json.loads(line))
         self.output_dir = Path(output_dir)
         
+        # Check if output directory exists, prompt user to create if not
+        if not self.output_dir.exists():
+            response = input(f"Output directory '{self.output_dir}' does not exist. Create it? (Y/n): ").strip().lower()
+            if response in ['', 'y', 'yes']:
+                self.output_dir.mkdir(parents=True, exist_ok=True)
+                print(f"Created output directory: {self.output_dir}")
+            else:
+                raise FileNotFoundError(f"Output directory '{self.output_dir}' does not exist and user chose not to create it.")
+        
     @classmethod
     def from_yaml(cls, config_path):
         with open(config_path, 'r') as f:
