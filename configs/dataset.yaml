@@ -1,0 +1,27 @@
+image:
+  width: 1024
+  height: 1024
+
+paths:
+  metadata: "/Users/dylanhawley/Projects/crafty-skins/data/raw/metadata.jsonl"
+  skin_dir: "/Users/dylanhawley/Projects/crafty-skins/data/raw/skins-post1.8/"
+  target_dir: "/Users/dylanhawley/Projects/crafty-skins/data/raw/input/"
+  output_dir: "/Users/dylanhawley/Projects/crafty-skins/data/processed/1024x1024/"
+
+perspectives:
+  - x: "left"
+    y: "front"
+    z: "up"
+    scaling_factor: 20
+  - x: "right"
+    y: "back"
+    z: "up"
+    scaling_factor: 20
+  - x: "left"
+    y: "back"
+    z: "down"
+    scaling_factor: 20
+  - x: "right"
+    y: "front"
+    z: "down"
+    scaling_factor: 20
