@@ -34,3 +34,20 @@ Examine whether prompts need to be customized for the skin panel. If so, use the
 - The goal is to enable training-free, in-context adaptation for Minecraft skin generation.
 - The composite format provides both visual context and target structure for the model.
 - SD-Edit is used for flexible, mask-based inpainting during inference.
+
+configs/
+- dataset.yaml
+- train_lora.yaml
+- inference_sdedit.yaml
+
+dataset/
+ - upload_to_hf.py
+ - generate_composites.py
+ - generate_prompts.py
+training/
+ - train_lora.py
+inference/
+ - mask_and_inpaint.py
+ - extract_uv.py
+
+ You are an expert generative ML researcher. Build a Python script which creates/trains a LoRA for image conditional generation using SDXL as the base model. The goal is to have a LoRA trained on my composite image dataset, where each sample contains a four panel composite image along with a caption, similar to the training approach in the paper titled "In-Context LoRA for Diffusion Transformers". The during inference, SDEdit is applied to mask several panels of the composite image intended for generation, enabling inpainting based on the surrounding images. The existing codebase is irrelevant to this creation - do not search the codebase; however, I do prefer the use of the Huggingface diffusers library if feasible. Assume the trainign dataset I have is a folder containing samples composed of two files: a 4 panel composite image, and its textual description stored in a .txt file with the same name as the image.

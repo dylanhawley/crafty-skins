@@ -77,3 +77,10 @@ The project requires the following Python packages:
 - argparse
 
 These dependencies are managed through Poetry and specified in the pyproject.toml file.
+
+Sources
+https://www.reddit.com/r/StableDiffusion/comments/1ejr20p/comparative_analysis_of_image_resolutions_with/
+
+This four-panel image showcases a rustic living room with warm wood tones and cozy decor elements; `[TOP-LEFT]` features a large stone fireplace with wooden shelves filled with books and candles; `[TOP-RIGHT]` shows a vintage leather sofa draped in plaid blankets, complemented by a mix of textured cushions; `[BOTTOM-LEFT]` displays a corner with a wooden armchair beside a side table holding a steaming mug and a classic book; `[BOTTOM-RIGHT]` captures a cozy reading nook with a window seat, a soft fur throw, and decorative logs stacked neatly.
+
+This four-panel image showcases a transformation from a photorealistic image to a Minecraft skin; [TOP-LEFT] features our <subject>, which has the description <describe character>; [TOP-RIGHT] shows the left front up and right back up isometric positions of the <subject> as a Minecraft avatar; [BOTTOM-LEFT] displays the left back down and right front down isometric positions of the <subject> as a Minecraft avatar; [BOTTOM-RIGHT] is a complete uv map for the Minecraft skin file constructed from the isometric views of our <subject> laid out in the previous two panels.
