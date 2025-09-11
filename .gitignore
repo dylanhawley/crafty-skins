@@ -168,3 +168,6 @@ cython_debug/
 .python-version
 data/
 experiments/
+
+models/*
+!models/.gitignore
