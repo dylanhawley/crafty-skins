@@ -84,3 +84,28 @@ https://www.reddit.com/r/StableDiffusion/comments/1ejr20p/comparative_analysis_o
 This four-panel image showcases a rustic living room with warm wood tones and cozy decor elements; `[TOP-LEFT]` features a large stone fireplace with wooden shelves filled with books and candles; `[TOP-RIGHT]` shows a vintage leather sofa draped in plaid blankets, complemented by a mix of textured cushions; `[BOTTOM-LEFT]` displays a corner with a wooden armchair beside a side table holding a steaming mug and a classic book; `[BOTTOM-RIGHT]` captures a cozy reading nook with a window seat, a soft fur throw, and decorative logs stacked neatly.
 
 This four-panel image showcases a transformation from a photorealistic image to a Minecraft skin; [TOP-LEFT] features our <subject>, which has the description <describe character>; [TOP-RIGHT] shows the left front up and right back up isometric positions of the <subject> as a Minecraft avatar; [BOTTOM-LEFT] displays the left back down and right front down isometric positions of the <subject> as a Minecraft avatar; [BOTTOM-RIGHT] is a complete uv map for the Minecraft skin file constructed from the isometric views of our <subject> laid out in the previous two panels.
+
+```bash
+accelerate launch train_text_to_image_sdxl.py \
+  --pretrained_model_name_or_path="stabilityai/stable-diffusion-xl-base-1.0" \
+  --pretrained_vae_model_name_or_path="madebyollin/sdxl-vae-fp16-fix" \
+  --dataset_name="vajdaad4m/minecraft-skins-1.5k" \
+  --resolution=1024 \
+  --proportion_empty_prompts=0.3 \
+  --train_batch_size=4 \
+  --gradient_accumulation_steps=1 \
+  --gradient_checkpointing \
+  --use_8bit_adam \
+  --max_train_steps=50000 \
+  --learning_rate=1e-05 \
+  --lr_scheduler="constant" \
+  --lr_warmup_steps=0 \
+  --mixed_precision="bf16" \
+  --report_to="wandb" \
+  --validation_prompt="a skin of Alan Turing" \
+  --checkpointing_steps=5000 \
+  --output_dir="sdxl-minecraft-model" \
+  --caption_column="short_description" \
+  --push_to_hub \
+  --allow_tf32
+```
