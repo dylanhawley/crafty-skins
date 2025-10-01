@@ -39,7 +39,6 @@ from datasets import concatenate_datasets, load_dataset
 from huggingface_hub import create_repo, upload_folder
 from packaging import version
 from torchvision import transforms
-from torchvision.transforms.functional import crop
 from tqdm.auto import tqdm
 from transformers import AutoTokenizer, PretrainedConfig
 
@@ -249,20 +248,6 @@ def parse_args(input_args=None):
             "The resolution for input images, all the images in the train/validation dataset will be resized to this"
             " resolution"
         ),
-    )
-    parser.add_argument(
-        "--center_crop",
-        default=False,
-        action="store_true",
-        help=(
-            "Whether to center crop the input images to the resolution. If not set, the images will be randomly"
-            " cropped. The images will be resized to the resolution first before cropping."
-        ),
-    )
-    parser.add_argument(
-        "--random_flip",
-        action="store_true",
-        help="whether to randomly flip images horizontally",
     )
     parser.add_argument(
         "--train_batch_size", type=int, default=16, help="Batch size (per device) for the training dataloader."
@@ -870,8 +855,6 @@ def main(args):
     if interpolation is None:
         raise ValueError(f"Unsupported interpolation mode {interpolation=}.")
     train_resize = transforms.Resize(args.resolution, interpolation=interpolation)
-    train_crop = transforms.CenterCrop(args.resolution) if args.center_crop else transforms.RandomCrop(args.resolution)
-    train_flip = transforms.RandomHorizontalFlip(p=1.0)
     train_transforms = transforms.Compose([transforms.ToTensor(), transforms.Normalize([0.5], [0.5])])
 
     def preprocess_train(examples):
@@ -883,17 +866,7 @@ def main(args):
         for image in images:
             original_sizes.append((image.height, image.width))
             image = train_resize(image)
-            if args.random_flip and random.random() < 0.5:
-                # flip
-                image = train_flip(image)
-            if args.center_crop:
-                y1 = max(0, int(round((image.height - args.resolution) / 2.0)))
-                x1 = max(0, int(round((image.width - args.resolution) / 2.0)))
-                image = train_crop(image)
-            else:
-                y1, x1, h, w = train_crop.get_params(image, (args.resolution, args.resolution))
-                image = crop(image, y1, x1, h, w)
-            crop_top_left = (y1, x1)
+            crop_top_left = (0, 0)  # No crop offset since we're not cropping
             crop_top_lefts.append(crop_top_left)
             image = train_transforms(image)
             all_images.append(image)
