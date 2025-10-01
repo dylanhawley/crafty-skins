@@ -1,2 +1,4 @@
 accelerate
 diffusers
+transformers
+scipy
