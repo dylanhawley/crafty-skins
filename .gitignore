@@ -2,4 +2,7 @@
 .python-version
 __pycache__/
 venv/
+
+*.log
 output/
+wandb/
