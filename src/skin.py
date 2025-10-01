@@ -1,4 +1,5 @@
 from scipy.spatial.distance import cdist
+from pathlib import Path
 from PIL import Image
 import numpy as np
 
@@ -136,9 +137,17 @@ def main(args, logger):
     logger.info("Extracting and scaling Minecraft skin from generated image.")
     minecraft_skin = extract_minecraft_skin(generated_image, args.width, args.height, cutoff=50)
 
-    logger.info("Saving skin to: '{}'.".format(args.output))
-    minecraft_skin.save(args.output)
-    generated_image.save("generated_image.png")
+    # Save the generated image to args.output
+    logger.info("Saving generated image to: '{}'.".format(args.output))
+    generated_image.save(args.output)
+    
+    # Generate filename for minecraft skin with "_skin" before extension
+    output_path = Path(args.output)
+    skin_filename = output_path.stem + "_skin" + output_path.suffix
+    skin_path = output_path.parent / skin_filename
+    
+    logger.info("Saving minecraft skin to: '{}'.".format(skin_path))
+    minecraft_skin.save(skin_path)
     
 if __name__ == "__main__":
     parser = create_inference_parser()
