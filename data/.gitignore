@@ -2,3 +2,4 @@
 *
 # But keep this .gitignore file
 !.gitignore
+!half-transparency-mask.png
