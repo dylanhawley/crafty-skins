@@ -2,3 +2,9 @@ accelerate
 diffusers
 transformers
 scipy
+
+# Training
+datasets
+torchvision
+bitsandbytes
+wandb # optional
