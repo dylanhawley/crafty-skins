@@ -9,7 +9,7 @@ accelerate launch src/train_text_to_image_sdxl.py \
   --pretrained_model_name_or_path="stabilityai/stable-diffusion-xl-base-1.0" \
   --pretrained_vae_model_name_or_path="madebyollin/sdxl-vae-fp16-fix" \
   --dataset_name="deepwaterhorizon/minecraft-skins-legacy" \
-  --resolution=768 \
+  --resolution=1024 \
   --proportion_empty_prompts=0.2 \
   --train_batch_size=4 \
   --gradient_accumulation_steps=1 \
